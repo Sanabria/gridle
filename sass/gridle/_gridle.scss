@@ -71,7 +71,7 @@ $gridle-generate-pull-classes 			: true !default;
 $gridle-generate-prefix-classes 		: true !default;
 $gridle-generate-suffix-classes 		: true !default;
 
-$gridle-generate-useful-states-classes 	: () !default;// retina | landscape | portrait | print | tv
+$gridle-generate-useful-states-classes 	: null !default;// retina | landscape | portrait | print | tv
 
 $gridle-debug-selector : ".gridle-debug &, &.gridle-debug";
 
@@ -1502,11 +1502,14 @@ $_gridle-state-15-classes 			: true !default;
 	$gridle-settings : "#{$gridle-settings}, \"generateSuffixClasses\" : #{$gridle-generate-suffix-classes}";
 	$gridle-settings : "#{$gridle-settings}, \"classPrefix\" : \"#{$gridle-class-prefix}\"";
 	$useful-states-classes : "[";
-	@for $i from 1 through length($gridle-generate-useful-states-classes) {
-		@if $i > 1 {
-			$useful-states-classes : "#{$useful-states-classes},";
+	@if type-of($gridle-generate-useful-states-classes) == list
+	{
+		@for $i from 1 through length($gridle-generate-useful-states-classes) {
+			@if $i > 1 {
+				$useful-states-classes : "#{$useful-states-classes},";
+			}
+			$useful-states-classes : "#{$useful-states-classes}\"#{nth($gridle-generate-useful-states-classes,$i)}\"";
 		}
-		$useful-states-classes : "#{$useful-states-classes}\"#{nth($gridle-generate-useful-states-classes,$i)}\"";
 	}
 	$useful-states-classes : "#{$useful-states-classes}]";
 	$gridle-settings : "#{$gridle-settings}, \"generateUsefulStatesClasses\" : #{$useful-states-classes}";
